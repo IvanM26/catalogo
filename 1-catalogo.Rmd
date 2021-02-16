@@ -16,11 +16,18 @@ header-includes:
 
 \renewcommand{\headrulewidth}{0pt}
 
+<!-- Cambiar nombre de la Table of Contents -->
+\renewcommand\contentsname{Índice}
+
+<!-- Eliminar formato de la Table of Contents -->
+<!-- Lo que buscaba era sacar el numero de pagina -->
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+
 <!-- Titulos de las tablas modificando el caption -->
 
 \captionsetup[table]{
    labelformat=empty,
-   font={huge, bf, color=white},
+   font={Large, bf, color=white},
    box=colorbox,
    boxcolor=black
 }
@@ -58,6 +65,18 @@ header-includes:
    \end{center}
 \end{titlepage}
 
+<!-- Insertar Indice (con salto de pagina cuando termina) -->
+\tableofcontents
+\newpage
+
+<!-- Elimino valores por defecto del encabezado y pie de pagina -->
+<!-- Los mismos seran modificados en el futuro -->
+\fancyhead[]{}
+\fancyfoot[]{}
+
+<!-- Inicio conteo de numero de pagina -->
+\setcounter{page}{1}
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
@@ -77,6 +96,17 @@ library(rlang)
 ```{r leer-datos}
 # Los productos se dividen en FAMILIAS
 # y cada FAMILIA esta dividida en CATEGORIAS
+
+# El archivo nombres_familias.xlsx contiene:
+# Codigo de la FAMILIA
+# Nombre de la FAMILIA
+# Este archivo se usara en el nombre de las secciones (usadas para el Indice)
+
+nombres_familias <- 
+   read_xlsx(
+      "data/nombres_familias.xlsx",
+      col_types = c("text", "text")
+   )
 
 # El archivo nombres_categorias.xlsx contiene:
 # Codigo de la FAMILIA
@@ -111,7 +141,7 @@ nombres_categorias <-
 # OPCIONAL: Crear una columna que indique si el producto debe
 # ser listado en el catalago que tome valores 1 y 0 (presente-ausente)
 
-precios_productos <- read_xlsx("data/precios_productos.xlsx") %>% 
+precios_productos <- read_xlsx("data/precios_productos_test.xlsx") %>% 
    # Aplico filtros a los datos.
    # En este caso particular, a veces se dejan placeholders
    # con celdas vacias para agregar mas productos en el futuro.
@@ -128,6 +158,8 @@ precios_productos <- read_xlsx("data/precios_productos.xlsx") %>%
    mutate(
       PRECIO = str_c("$", sprintf("%.2f", round(PRECIO,2)))
       ) %>% 
+   # Agrego el nombre de las familias
+   left_join(nombres_familias) %>% 
    # Agrego el nombre de las categorias
    left_join(nombres_categorias)
 ```

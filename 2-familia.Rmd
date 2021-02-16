@@ -1,8 +1,8 @@
 <!-- Codigo para poner una imagen en el encabezado que depende de la FAMILIA -->
 <!-- {{i}} indica el nombre de la familia en cada iteracion del loop/bucle -->
-<!-- Las imagenes se deben guardar, en este caso, dentro de img/head -->
+<!-- Las imagenes se deben guardar, en este caso, dentro de img/1-head -->
 
-<!-- \fancyhead[C]{\includegraphics{img/head/{{i}}.jpg}} -->
+\fancyhead[C]{\includegraphics{img/1-head/{{i}}.jpg}}
 
 <!-- Codigo para poner una imagen en el pie de pagina que depende de la FAMILIA -->
 <!-- {{i}} indica el nombre de la familia en cada iteracion del loop/bucle -->
@@ -14,9 +14,25 @@
 <!-- Numero de pagina a la derecha -->
 \rfoot{\thepage}
 
+<!-- En el nombre del siguiente code chunk uso {{i}} porque  -->
+<!-- si no me tira error de duplicate chunk name -->
+
+```{r nombre-familia-{{i}}}
+# Caracter con el nombre de la familia de la iteracion i
+# Usado en nombres de secciones
+# Se espera que los Codigos de FAMILIA sean caracter
+# Caso contrario, as_name(quote()) arrojara error
+NOMBRE_FAMILIA <- 
+  nombres_familias %>% 
+  filter(FAMILIA == as_name(quote({{i}}))) %>% 
+  select(NOMBRE_FAMILIA) %>% 
+  as.character()
+```
+
+
 <!-- Codigo usado para separar FAMILIAS -->
 \begin{tcolorbox}
-  \textsc{\huge{\textbf{\textcolor{yellow}{ {{i}} }}}}
+  \section[`r NOMBRE_FAMILIA`]{\textsc{\LARGE{\textbf{\textcolor{yellow}{ `r NOMBRE_FAMILIA` }  }}}}
 \end{tcolorbox}
 
 <!-- En el nombre del siguiente code chunk uso {{i}} porque  -->
