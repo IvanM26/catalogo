@@ -58,7 +58,7 @@ precios_prod_cat_j <- precios_prod_fam_i %>%
 # Si no hago esto, cuando tengo una tabla con menos de 2 filas,
 # latex_options = c("striped") da error.
 
-if (nrow(precios_prod_cat_j) > 2) {
+if (nrow(precios_prod_cat_j) > 1) {
   precios_prod_cat_j  %>%
     kable(
       align = c("l", "l", "r"),
