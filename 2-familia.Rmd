@@ -11,6 +11,9 @@
 
 <!-- \lfoot{\includegraphics{img/foot/{{i}}.jpg}} -->
 
+<!-- Link al Indice en el centro del pie de pagina -->
+\cfoot{\hyperref[toc]{Volver al Indice}}
+
 <!-- Numero de pagina a la derecha -->
 \rfoot{\thepage}
 

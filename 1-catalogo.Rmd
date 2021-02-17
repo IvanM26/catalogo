@@ -10,6 +10,13 @@ header-includes:
    \pagestyle{fancy}
    \usepackage[T1]{fontenc}
    \usepackage{tgbonum}
+   \usepackage{hyperref}
+   \hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+   }
 ---
 
 <!-- Remover linea separadora del header -->
@@ -17,10 +24,12 @@ header-includes:
 \renewcommand{\headrulewidth}{0pt}
 
 <!-- Cambiar nombre de la Table of Contents -->
-\renewcommand\contentsname{Índice}
+
+\renewcommand\contentsname{\huge{Índice}}
 
 <!-- Eliminar formato de la Table of Contents -->
 <!-- Lo que buscaba era sacar el numero de pagina -->
+
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 
 <!-- Titulos de las tablas modificando el caption -->
@@ -61,12 +70,12 @@ header-includes:
    Italia 5239 - Rosario - Santa Fe\\
    ferreteradellitoral@gmail.com\\
    341-4655535 / 341-5952517\\
-   www.ferreteradellitoralsrl.com.ar
+   \url{www.ferreteradellitoralsrl.com.ar}
    \end{center}
 \end{titlepage}
 
 <!-- Insertar Indice (con salto de pagina cuando termina) -->
-\tableofcontents
+\tableofcontents\label{toc}
 \newpage
 
 <!-- Elimino valores por defecto del encabezado y pie de pagina -->
